@@ -1,0 +1,24 @@
+.box-image {
+    width: 90%;
+    height: 690px;
+    border-radius: 9px;
+}
+
+.heading-name {
+    margin-top: 25vh;
+}
+
+p {
+    font-weight: 700;
+}
+
+select {
+    margin: 0 0 10px 0;
+    width: 17%;
+    height: 35px;
+}
+
+a{
+    display: block;
+    margin-top: 10px;
+}

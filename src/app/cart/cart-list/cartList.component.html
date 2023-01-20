@@ -1,0 +1,34 @@
+<div class="text-center" *ngIf="listOfProductsInCart.length == 0;else cartList;">
+    Your Cart Is Empty
+</div>
+<ng-template #cartList>
+    <div class="row" *ngIf="!isCartFormSubmitted; else cartFormSubmitted">
+        <div class="col-md-6">
+            <div class="row" *ngFor="let prod of listOfProductsInCart">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <img class="box-image" [src]="prod.product.url" alt="{{prod.product.name}}" />
+                </div>
+                <div class="col-md-6">
+                    <h3 class="h3 box-heading-of-product"> {{prod.product.name}} </h3>
+                    <p>$ {{prod.product.price}} </p>
+                    <p> Amount : <input type="number" (change)="updateCart(prod,$event)"
+                            (keyup)="updateCart(prod,$event)" class="form-control txt-field-amount"
+                            [value]="prod.amount" /> </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <h2 class="h2">Total {{sumOfProductInCart}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <app-submit-cart (afterSubmit)="afterSubmit($event)"></app-submit-cart>
+        </div>
+    </div>
+</ng-template>
+<ng-template #cartFormSubmitted>
+    <app-success-submit [successSubmitModel]="successSubmitModel"></app-success-submit>
+</ng-template>

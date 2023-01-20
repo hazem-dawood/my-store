@@ -1,0 +1,15 @@
+.image-box-container .image-box {
+    border: 2px solid #94b7d9;
+    width: 100%;
+    padding: 12px;
+    display: block;
+}
+
+.image-box-container .image-box img {
+    height: 500px;
+    width: 100%;
+}
+
+.image-box-container .image-box-detail button {
+    margin-bottom: 30px;
+}

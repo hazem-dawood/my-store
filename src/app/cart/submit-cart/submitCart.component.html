@@ -1,0 +1,50 @@
+<form class="row" [noValidate]="false" [formGroup]="cartForm" (ngSubmit)="submitCart()">
+    <div class="col-md-12 form-group full-name-div">
+        <label for="txtName">Full Name</label>
+        <input id="txtName" class="form-control" required formControlName="fullName" min="3"
+            placeholder="(minimum 3 characters)" />
+        <div class="form-group m-3 text-danger"
+            *ngIf="cartForm.controls['fullName'].touched && cartForm.controls['fullName'].invalid">
+            <p *ngIf="cartForm.controls['fullName'].errors?.['required']">
+                full name field is required
+            </p>
+            <p *ngIf="cartForm.controls['fullName'].errors?.['minlength']">
+                full name field must be at least 3 charcaters
+            </p>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <label for="txtAddress">Address</label>
+        <input class="form-control" id="txtAddress" min="6" required minlength="6" formControlName="address"
+            placeholder="(minimum 6 characters)" />
+        <div class="form-group m-3 text-danger"
+            *ngIf="cartForm.controls['address'].touched && cartForm.controls['address'].invalid">
+            <p *ngIf="cartForm.controls['address'].errors?.['required']">
+                address field is required
+            </p>
+            <p *ngIf="cartForm.controls['address'].errors?.['minlength']">
+                address field must be at least 6 charcaters
+            </p>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <label for="txtCreditCard">Credit Card Number</label>
+        <input class="form-control" id="txtCreditCard" required minlength="16" maxlength="16" type="number"
+            formControlName="cardDigit" placeholder="(16-digit number)" />
+        <span>we will never share your credit card number with any one!</span>
+        <br />
+        <div class="form-group m-3 text-danger"
+            *ngIf="cartForm.controls['cardDigit'].touched && cartForm.controls['cardDigit'].invalid">
+            <p *ngIf="cartForm.controls['cardDigit'].errors?.['required']">
+                Card Digit Field is required
+            </p>
+            <p
+                *ngIf="cartForm.controls['cardDigit'].errors?.['minlength'] || cartForm.controls['cardDigit'].errors?.['maxlength']">
+                Card Digit Field must be at least 16 digites
+            </p>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

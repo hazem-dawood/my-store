@@ -1,0 +1,15 @@
+<div class="image-box-container">
+    <a class="image-box" routerLink="/productDetail/{{product.id}}">
+        <img class="box-image" [src]="product.url" alt="{{product.name}}" />
+    </a>
+    <div class="image-box-detail text-center">
+        <h4>{{product.name}}</h4>
+        <p>{{product.price}} $</p>
+        <select title="Amount" class="ddl-amount" [(ngModel)]="amount">
+            <option *ngFor="let option of amountOptions" [value]="option">{{option}}</option>
+        </select>
+        <button type="button" class="btn btn-primary" (click)="addProductToCart()">
+            Add To Cart
+        </button>
+    </div>
+</div>

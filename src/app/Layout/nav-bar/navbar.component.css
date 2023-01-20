@@ -1,0 +1,27 @@
+.app-nav {
+    background-color: dodgerblue;
+    color: white;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.ul-links {
+    list-style: none;
+}
+
+.ul-links li {
+    padding: 2px;
+    display: inline-block;
+}
+
+.ul-links li a {
+    text-decoration: none;
+    text-align: center;
+    color: white;
+}
+
+.cart-image {
+    max-height: 15px;
+    margin-left: 3px;
+    margin-right: 25px;
+}

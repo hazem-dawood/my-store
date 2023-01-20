@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row" *ngIf="isLoading">
+        <div class="col-md-12 text-center">
+            <p>Loading ....</p>
+        </div>
+    </div>
+    <div class="row" *ngIf="!isLoading">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <img class="box-image" [src]="product.url" alt="{{product.name}}" />
+        </div>
+        <div class="col-md-6">
+            <h3 class="heading-name h3">{{product.name}}</h3>
+            <p>$ {{product.price}}</p>
+            <p> {{product.description }} </p>
+            <select title="Amount" class="ddl-amount" [(ngModel)]="amount">
+                <option *ngFor="let option of amountOptions" [value]="option">{{option}}</option>
+            </select>
+            <button type="button" class="btn btn-primary" (click)="addToCart()">
+                Add To Cart
+            </button>
+            <a routerLink="/products" type="button">Back To Product List</a>
+        </div>
+    </div>
+</div>

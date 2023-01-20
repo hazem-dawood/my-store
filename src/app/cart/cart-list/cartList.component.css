@@ -1,0 +1,11 @@
+.box-image {
+    max-width: 90%;
+    height: 175px;
+    border-radius: 10px;
+    margin: 14px 0;
+}
+
+.txt-field-amount {
+    display: inline;
+    width: 80px;
+}
