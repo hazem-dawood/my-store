@@ -8,8 +8,6 @@ const routes: Routes = [
   { path: 'productDetail/:id', component: ProductDetailComponent },
   { path: 'productList', component: ProductListComponent },
   { path: 'cartList', component: CartListComponent },
-  //   { path: 'addorder', component: AddOrderComponent },
-  //   { path: 'Confiramation', component: ConfiramationComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'productList' },
 ];
 @NgModule({
