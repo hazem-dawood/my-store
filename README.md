@@ -5,8 +5,11 @@ Can Choose Producs with a count and add to the cart
 
 Project Contains 3 Main Modules (Cart , Product , Layout)
 Cart is place to show added producst and buy them
+
 Product show details and can add them to the cart
+
 Layout base of the application => NavBar
+
 each Module has its services and components
 
 Working with routing
