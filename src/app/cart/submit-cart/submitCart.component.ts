@@ -5,7 +5,7 @@ import { SuccessSubmitModel } from "src/app/models/cart/successSubmit.model";
 @Component({
     selector: 'app-submit-cart',
     templateUrl: './submitCart.component.html',
-    styleUrls:['./submitCart.component.css']
+    styleUrls: ['./submitCart.component.css']
 })
 
 export class SubmitCartComponent {
@@ -15,7 +15,10 @@ export class SubmitCartComponent {
     cartForm: FormGroup = new FormGroup({
         fullName: new FormControl('', [Validators.required, Validators.minLength(3)]),
         address: new FormControl('', [Validators.required, Validators.minLength(6)]),
-        cardDigit: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)])
+        cardDigit: new FormControl('',
+            [Validators.required,
+            Validators.minLength(16),
+            Validators.maxLength(16)])
     });
 
     submitCart() {
@@ -29,4 +32,6 @@ export class SubmitCartComponent {
         // after saving
         this.afterSubmit.emit(fullName);
     }
+
+
 }
