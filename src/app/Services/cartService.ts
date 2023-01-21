@@ -33,18 +33,56 @@ export class CartService {
         } else {
             arr.push(addToCart);
         }
-        localStorage.setItem(this.nameOfLocalStorage, JSON.stringify(arr));
+        this.updateLocalStorage(arr);
         return true;
     }
 
+    getByProductId(productId: number): AddToCartModel | null {
+        if (this.nameOfLocalStorage in localStorage) {
+            var arr: AddToCartModel[] = JSON.parse(localStorage.getItem(this.nameOfLocalStorage) + '');
+            var isProductExists = arr.filter(a => a.product.id == productId);
+            if (isProductExists.length > 0) {
+                return isProductExists[0];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * update product amount 
+     * @param addToCart AddToCartModel
+     * @param amount number
+     */
     updateProductAmount(addToCart: AddToCartModel, amount: number) {
         addToCart.amount = amount;
         this.addProductToCart(addToCart);
     }
 
+    removeProductFromCart(productId: number): Array<AddToCartModel> {
+        if (this.nameOfLocalStorage in localStorage) {
+            var arr: AddToCartModel[] = JSON.parse(localStorage.getItem(this.nameOfLocalStorage) + '');
+            var isProductExists = arr.filter(a => a.product.id == productId);
+            if (isProductExists.length > 0) {
+                // if got here then product exists => remove it
+                arr.splice(arr.indexOf(isProductExists[0]), 1);
+                this.updateLocalStorage(arr);
+                return arr;
+            }
+        }
+        return [];
+    }
+
+    /**
+     * remove all data from cart
+     */
     resetCart(): void {
         if (this.nameOfLocalStorage in localStorage) {
             localStorage.removeItem(this.nameOfLocalStorage);
         }
+    }
+
+    // save data in local storage
+    private updateLocalStorage(arr: AddToCartModel[]) {
+        localStorage.setItem(this.nameOfLocalStorage, JSON.stringify(arr));
     }
 }

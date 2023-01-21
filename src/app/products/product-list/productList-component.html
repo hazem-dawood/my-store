@@ -6,7 +6,8 @@
     </div>
     <div class="row" *ngIf="!isLoading">
         <div class="col-md-4" *ngFor="let product of products">
-            <product-item [product]="product" (addToCart)="addToCart($event)"></product-item>
+            <product-item [product]="product" [isExistsInCart]="isProductExistsInCart(product.id)"
+                (addToCart)="addToCart($event)" (removeFromCart)="removeFromCart($event)"></product-item>
         </div>
     </div>
 </div>

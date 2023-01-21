@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { CartService } from "src/app/Services/cartService";
 import { AddToCartModel } from "src/app/models/cart/addToCart.model";
 import { ProductModel } from "src/app/models/product/product.model";
 
@@ -8,18 +9,39 @@ import { ProductModel } from "src/app/models/product/product.model";
     styleUrls: ['./productItem-component.css']
 })
 
-export class ProductItemComponent {
+export class ProductItemComponent implements OnInit {
     amount: number = 1;
     @Input() product: ProductModel = new ProductModel(0, '', 0, '', '');
+    @Input() isExistsInCart: AddToCartModel | null = null;
     @Output() addToCart: EventEmitter<AddToCartModel> = new EventEmitter<AddToCartModel>();
+    @Output() removeFromCart: EventEmitter<any> = new EventEmitter<number>();
+
     amountOptions: number[] = [];
-    constructor() {
+
+    constructor(private cartService: CartService) {
         for (var i = 1; i <= 15; i++) {
             this.amountOptions.push(i);
         }
     }
+    ngOnInit(): void {
+        if (this.isExistsInCart != null) {
+            this.amount = this.isExistsInCart.amount;
+        }
+    }
+
+    updateAmount(event: Event) {
+        if (this.isExistsInCart != null) {
+            this.cartService.updateProductAmount(this.isExistsInCart, this.amount);
+        }
+    }
 
     addProductToCart() {
-        this.addToCart.emit(new AddToCartModel(this.product, this.amount));
+        var addToCart = new AddToCartModel(this.product, this.amount);
+        this.isExistsInCart = addToCart;
+        this.addToCart.emit(addToCart);
+    }
+
+    removeProductFromCart() {
+        this.removeFromCart.emit(this.product.id);
     }
 }

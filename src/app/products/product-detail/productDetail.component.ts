@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CartService } from "src/app/Services/cartService";
 import { ProductService } from "src/app/Services/productService";
 import { AddToCartModel } from "src/app/models/cart/addToCart.model";
 import { ProductModel } from "src/app/models/product/product.model";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     amountOptions: number[] = [];
     id: number = 0;
     isLoading: boolean = true;
+    isExistsInCart: AddToCartModel | null = null;
 
     constructor(private route: ActivatedRoute,
         private productService: ProductService,
@@ -38,9 +40,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     addToCart() {
         if (this.cartService.addProductToCart(new AddToCartModel(this.product, this.amount))) {
-            alert('added successfully');
+            this.isExistsInCart = this.cartService.getByProductId(this.product.id);
+            Swal.fire({
+                icon: 'success',
+                title: 'Saved Successfully',
+                showConfirmButton: false,
+                timer: 1300
+            });
         } else {
-            alert('error aoocured');
+            Swal.fire('error occurred', '', 'error');
         }
     }
 
@@ -53,6 +61,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
                 this.router.navigateByUrl('/');
             } else {
                 this.product = res[0];
+                this.isExistsInCart = this.cartService.getByProductId(this.product.id);
+                if (this.isExistsInCart != null) {
+                    this.amount = this.isExistsInCart.amount;
+                }
             }
         }, (err) => {
             console.error(err);
@@ -62,5 +74,31 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
 
+    }
+
+    removeFromCart() {
+        Swal.fire({
+            title: 'Are you sure want to remove?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.value) {
+                this.cartService.removeProductFromCart(this.product.id);
+                this.isExistsInCart = null;
+                Swal.fire({
+                    icon: "success",
+                    text: "Deleted Successfully",
+                    timer: 1500
+                })
+            }
+        })
+    }
+
+    updateAmount(event: Event) {
+        if (this.isExistsInCart != null) {
+            this.cartService.updateProductAmount(this.isExistsInCart, this.amount);
+        }
     }
 }

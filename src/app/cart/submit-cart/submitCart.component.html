@@ -29,7 +29,8 @@
     </div>
     <div class="col-md-12 form-group">
         <label for="txtCreditCard">Credit Card Number</label>
-        <input class="form-control" id="txtCreditCard" required min="16" max="16" maxlength="16" minlength="16"
+        <input class="form-control" id="txtCreditCard" required type="number"
+        (keypress)="enter16NumberOnly($event)"
             formControlName="cardDigit" placeholder="(16-digit number)" />
         <span>we will never share your credit card number with any one!</span>
         <br />
@@ -39,7 +40,8 @@
                 Card Digit Field is required
             </p>
             <p
-                *ngIf="cartForm.controls['cardDigit'].errors?.['minlength'] || cartForm.controls['cardDigit'].errors?.['maxlength']">
+                *ngIf="cartForm.controls['cardDigit'].errors?.['minlength'] || cartForm.controls['cardDigit'].errors?.['maxlength']
+                || cartForm.controls['cardDigit'].errors?.['pattern']">
                 Card Digit Field must be at least 16 digites
             </p>
         </div>

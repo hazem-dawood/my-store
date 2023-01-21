@@ -5,11 +5,14 @@
     <div class="image-box-detail text-center">
         <h4>{{product.name}}</h4>
         <p>{{product.price}} $</p>
-        <select title="Amount" class="ddl-amount" [(ngModel)]="amount">
+        <select title="Amount" class="ddl-amount" [(ngModel)]="amount" (ngModelChange)="updateAmount($event)">
             <option *ngFor="let option of amountOptions" [value]="option">{{option}}</option>
         </select>
-        <button type="button" class="btn btn-primary" (click)="addProductToCart()">
+        <button type="button" *ngIf="!isExistsInCart" class="btn btn-primary" (click)="addProductToCart()">
             Add To Cart
+        </button>
+        <button type="button" *ngIf="isExistsInCart" class="btn btn-danger" (click)="removeProductFromCart()">
+            Delete From Cart
         </button>
     </div>
 </div>

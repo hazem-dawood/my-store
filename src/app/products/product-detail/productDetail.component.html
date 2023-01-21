@@ -13,11 +13,14 @@
             <h3 class="heading-name h3">{{product.name}}</h3>
             <p>$ {{product.price}}</p>
             <p> {{product.description }} </p>
-            <select title="Amount" class="ddl-amount" [(ngModel)]="amount">
+            <select title="Amount" class="ddl-amount" [(ngModel)]="amount" (ngModelChange)="updateAmount($event)">
                 <option *ngFor="let option of amountOptions" [value]="option">{{option}}</option>
             </select>
-            <button type="button" class="btn btn-primary" (click)="addToCart()">
+            <button type="button" *ngIf="!this.isExistsInCart" class="btn btn-primary" (click)="addToCart()">
                 Add To Cart
+            </button>
+            <button type="button" *ngIf="this.isExistsInCart" class="btn btn-danger" (click)="removeFromCart()">
+                Delete From Cart
             </button>
             <a routerLink="/products" type="button">Back To Product List</a>
         </div>

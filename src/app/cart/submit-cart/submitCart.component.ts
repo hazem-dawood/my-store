@@ -18,8 +18,15 @@ export class SubmitCartComponent {
         cardDigit: new FormControl('',
             [Validators.required,
             Validators.minLength(16),
-            Validators.maxLength(16)])
+            Validators.maxLength(16),
+            // regex to enter numbers between 0 and 9 with max length 16 digit
+            Validators.pattern("^[0-9]{16}$")],
+        )
     });
+
+    enter16NumberOnly(event: Event): boolean {
+        return !((event.target as HTMLInputElement).value.length >= 16);
+    }
 
     submitCart() {
         if (this.cartForm.invalid) {

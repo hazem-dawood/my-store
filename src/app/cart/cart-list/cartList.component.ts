@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CartService } from "src/app/Services/cartService";
 import { AddToCartModel } from "src/app/models/cart/addToCart.model";
 import { SuccessSubmitModel } from "src/app/models/cart/successSubmit.model";
+import { ProductModel } from "src/app/models/product/product.model";
+import Swal from "sweetalert2";
 
 @Component({
     selector: 'cart-list',
@@ -25,8 +26,8 @@ export class CartListComponent implements OnInit {
     }
 
     updateCart(addToCart: AddToCartModel, event: Event) {
-        var inpt = event.target as HTMLInputElement;
-        this.cartService.updateProductAmount(addToCart, parseInt(inpt.value));
+        var amount = parseInt((event.target as HTMLInputElement).value);
+        this.cartService.updateProductAmount(addToCart, amount);
         // update cart,total
         this.loadCartPriducts();
     }
@@ -40,6 +41,25 @@ export class CartListComponent implements OnInit {
         if (this.listOfProductsInCart.length == 0)
             return 0;
         return this.listOfProductsInCart.map(a => a.product.price * a.amount).reduce((a, b) => a + b, 0);
+    }
+
+    removeProductFromCart(product: ProductModel) {
+        Swal.fire({
+            title: 'Are you sure want to remove?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.value) {
+                this.listOfProductsInCart = this.cartService.removeProductFromCart(product.id);
+                Swal.fire({
+                    icon: "success",
+                    text: "Deleted Successfully",
+                    timer: 1500
+                })
+            }
+        })
     }
 
 
